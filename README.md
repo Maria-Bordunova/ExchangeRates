@@ -3,6 +3,10 @@ The Simple Project loads data from OpenExchangeRates API https://openexchangerat
 
 The application implements MVP architecture using Java, Dagger2 and Retrofit.
 
+<p align="center">
+  <img src="https://i.imgur.com/REmhq3b.gif" >
+</p>
+
 ## Features:
 
 - [x] server and network errors handling;
