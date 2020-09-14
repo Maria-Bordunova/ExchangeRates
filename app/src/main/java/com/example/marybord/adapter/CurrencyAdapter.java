@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marybord.R;
-import com.example.marybord.model.Currency;
+import com.example.marybord.data.Currency;
 
 import java.util.List;
 

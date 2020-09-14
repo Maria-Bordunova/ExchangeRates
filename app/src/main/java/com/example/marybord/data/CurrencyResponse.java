@@ -1,4 +1,4 @@
-package com.example.marybord.model;
+package com.example.marybord.data;
 /**
  * @author Mary Bordunova
  * @date 8/11/2020

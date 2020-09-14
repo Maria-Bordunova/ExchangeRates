@@ -4,7 +4,7 @@ package com.example.marybord.network;
  * @date 8/11/2020
  * @description This is an api interface class, it contains all Api call references
  */
-import com.example.marybord.model.CurrencyResponse;
+import com.example.marybord.data.CurrencyResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

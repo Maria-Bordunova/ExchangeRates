@@ -1,9 +1,5 @@
-package com.example.marybord.main_activity;
-/**
- * @author Mary Bordunova
- * @date 8/11/2020
- * @description This activity is responsible for showing all currencies data in list format
- */
+package com.example.marybord.mvp;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,14 +12,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.marybord.App;
 import com.example.marybord.R;
 import com.example.marybord.adapter.CurrencyAdapter;
-import com.example.marybord.model.Currency;
+import com.example.marybord.data.Currency;
+import com.example.marybord.di.component.ActivityComponent;
+import com.example.marybord.di.component.DaggerActivityComponent;
+import com.example.marybord.di.component.AppComponent;
+import com.example.marybord.di.module.ActivityModule;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.inject.Inject;
+
+/**
+ * @author Mary Bordunova
+ * @date 8/11/2020
+ * @description This activity is responsible for showing all currencies data in list format
+ */
 
 public class MainActivity extends AppCompatActivity implements CurrencyContract.View {
     private RecyclerView recyclerView;
@@ -31,20 +39,28 @@ public class MainActivity extends AppCompatActivity implements CurrencyContract.
     private ProgressBar progressBar;
     private Button buttonGetRates;
 
-    private CurrencyPresenter currencyPresenter;
-
     private static final String TAG = "MainActivity";
+
+    @Inject
+    CurrencyPresenter currencyPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Dependency Injection
+        AppComponent appComponent = ((App) this.getApplicationContext()).getAppComponent();
+
+        ActivityComponent activityComponent = DaggerActivityComponent.builder()
+                .appComponent(appComponent)
+                .activityModule(new ActivityModule(this))
+                .build();
+        activityComponent.inject(this);
+
         initUI();
 
         setListeners();
-
-        currencyPresenter = new CurrencyPresenter(this);
     }
 
     /**
@@ -58,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements CurrencyContract.
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+        onSuccessful(new ArrayList<>());
 
         hideProgress();
     }
@@ -89,29 +106,27 @@ public class MainActivity extends AppCompatActivity implements CurrencyContract.
     }
 
     @Override
-    public void setDataToRecyclerView(List<Currency> currencies) {
+    public void onSuccessful(List<Currency> currencies) {
         CurrencyAdapter adapter = new CurrencyAdapter(currencies);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
-    public void onResponseFailure(Throwable throwable, String errorMessage) {
+    public void onFailure(Throwable throwable, String errorMessage) {
         Log.e(TAG, throwable.getMessage());
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-        setDataToRecyclerView(new ArrayList<>());
+        onSuccessful(new ArrayList<>());
     }
 
     @Override
-    public void onResponseServerError(String errorMessage) {
+    public void onServerError(String errorMessage) {
         Log.e(TAG, errorMessage);
         Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
-        setDataToRecyclerView(new ArrayList<>());
+        onSuccessful(new ArrayList<>());
     }
-
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        currencyPresenter.onDestroy();
     }
 }
