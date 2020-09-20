@@ -6,13 +6,12 @@ package com.example.marybord.di.component;
  */
 import com.example.marybord.di.module.AppModule;
 import com.example.marybord.di.module.NetModule;
-
-import javax.inject.Singleton;
+import com.example.marybord.di.scope.PerApplication;
 
 import dagger.Component;
 import retrofit2.Retrofit;
 
-@Singleton
+@PerApplication
 @Component(modules = {AppModule.class, NetModule.class})
 public interface AppComponent {
 

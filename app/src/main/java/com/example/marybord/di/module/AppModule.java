@@ -6,7 +6,7 @@ package com.example.marybord.di.module;
  */
 import android.app.Application;
 
-import javax.inject.Singleton;
+import com.example.marybord.di.scope.PerApplication;
 
 import dagger.Module;
 import dagger.Provides;
@@ -19,8 +19,8 @@ public class AppModule {
         this.application = application;
     }
 
+    @PerApplication
     @Provides
-    @Singleton
     Application provideApplication() {
         return application;
     }

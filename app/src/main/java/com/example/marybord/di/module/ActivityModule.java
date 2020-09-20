@@ -5,7 +5,7 @@ package com.example.marybord.di.module;
  * @description Module for MainActivity . It's a part of ActivityComponent
  */
 
-import com.example.marybord.di.scope.ActivityScope;
+import com.example.marybord.di.scope.PerActivity;
 import com.example.marybord.mvp.CurrencyContract;
 
 import dagger.Module;
@@ -20,8 +20,8 @@ public class ActivityModule {
         this.view = view;
     }
 
+    @PerActivity
     @Provides
-    @ActivityScope
     CurrencyContract.View provideMainView() {
         return view;
     }

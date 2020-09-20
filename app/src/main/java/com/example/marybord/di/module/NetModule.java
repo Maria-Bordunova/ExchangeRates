@@ -11,13 +11,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
+import com.example.marybord.di.scope.PerApplication;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
@@ -41,30 +40,31 @@ public class NetModule {
     private static final String TAG = "NetModule";
 
     public static final int CACHE_SIZE = 10 * 1024 * 1024; // 10 MB
+
+    @PerApplication
     @Provides
-    @Singleton
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
         return gsonBuilder.create();
     }
 
+    @PerApplication
     @Provides
-    @Singleton
     Cache provideOkHttpCache(Application application) {
         Cache cache = new Cache(application.getCacheDir(), CACHE_SIZE);
         return cache;
     }
 
+    @PerApplication
     @Provides
-    @Singleton
     ConnectivityManager provideConnectivityManager(Application application) {
         ConnectivityManager connectivityManager = (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager;
     }
 
+    @PerApplication
     @Provides
-    @Singleton
     OkHttpClient provideOKHttp(Cache cache, ConnectivityManager connectivityManager) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -79,8 +79,8 @@ public class NetModule {
         return okHttpClient;
     }
 
+    @PerApplication
     @Provides
-    @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         Retrofit retrofit = new Retrofit.Builder().
                 addConverterFactory(GsonConverterFactory.create(gson))
@@ -89,7 +89,6 @@ public class NetModule {
                 .build();
         return retrofit;
     }
-
 
     private Interceptor provideCacheInterceptor(ConnectivityManager connectivityManager) {
         return chain -> {

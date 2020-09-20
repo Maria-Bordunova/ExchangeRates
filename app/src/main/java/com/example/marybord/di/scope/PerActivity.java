@@ -1,5 +1,8 @@
 package com.example.marybord.di.scope;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 import javax.inject.Scope;
 
 /**
@@ -9,5 +12,6 @@ import javax.inject.Scope;
  */
 
 @Scope
-public @interface ActivityScope {
+@Retention(RetentionPolicy.RUNTIME)
+public @interface PerActivity {
 }
