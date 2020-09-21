@@ -12,14 +12,14 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.marybord.R;
-import com.example.marybord.data.Currency;
+import com.example.marybord.data.Rate;
 
 import java.util.List;
 
 public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.RateHolder> {
-    private List<Currency> rates;
+    private List<Rate> rates;
 
-    public CurrencyAdapter(List<Currency> rates) {
+    public CurrencyAdapter(List<Rate> rates) {
         this.rates = rates;
     }
 
@@ -31,7 +31,7 @@ public class CurrencyAdapter extends RecyclerView.Adapter<CurrencyAdapter.RateHo
 
     @Override
     public void onBindViewHolder(RateHolder holder, int position) {
-        Currency rate = rates.get(position);
+        Rate rate = rates.get(position);
         holder.textViewCurrency.setText(rate.getName());
         holder.textViewRate.setText(rate.getRate().toString());
     }

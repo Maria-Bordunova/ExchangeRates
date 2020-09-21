@@ -7,6 +7,7 @@ package com.example.marybord.mvp;
 
 import android.util.Log;
 
+import com.example.marybord.data.Rate;
 import com.example.marybord.data.Currency;
 import com.example.marybord.data.CurrencyResponse;
 import com.example.marybord.network.ApiInterface;
@@ -17,8 +18,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -56,9 +57,10 @@ public class CurrencyPresenter implements CurrencyContract.Presenter {
 
                 if (response.isSuccessful()) {
                     CurrencyResponse rateResponse = response.body();
+                    Currency currency = new Currency();
+                    currency.rates= rateResponse.rates;
 
-                    HashMap<String, Double> hashMap = rateResponse.getCurrencies();
-                    List<Currency> rates = getListCurrenciesFromMap(hashMap);
+                    List<Rate> rates = getListCurrenciesFromMap(currency.rates);
                     view.onSuccessful(rates);
                 } else {
                     try {
@@ -92,12 +94,12 @@ public class CurrencyPresenter implements CurrencyContract.Presenter {
         return dateFormat.format(calendar.getTime());
     }
 
-    private List<Currency> getListCurrenciesFromMap(HashMap<String, Double> map) {
-        List<Currency> rates = new ArrayList<Currency>();
+    private List<Rate> getListCurrenciesFromMap(Map<String, Double> map) {
+        List<Rate> rates = new ArrayList<Rate>();
 
         for (String key : map.keySet()) {
             double rate = map.get(key);
-            rates.add(new Currency(key, rate));
+            rates.add(new Rate(key, rate));
         }
 
         return rates;

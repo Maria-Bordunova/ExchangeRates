@@ -1,25 +1,16 @@
 package com.example.marybord.data;
-/**
- * @author Mary Bordunova
- * @date 8/11/2020
- * @description This class will be useful when we are going to call api for get currencies
- */
-import com.google.gson.annotations.SerializedName;
 
 import java.util.HashMap;
 
+/**
+ * @author Mary Bordunova
+ * @date 9/21/2020
+ * @description It describes all data returned from the API
+ */
 public class CurrencyResponse {
-
-    private String baseCurrency;
-
-    @SerializedName("rates")
-    private HashMap<String, Double> currencies;
-
-    public HashMap<String, Double> getCurrencies() {
-        return currencies;
-    }
-
-    public String getBaseCurrency() {
-        return baseCurrency;
-    }
+    public String disclaimer;
+    public String license;
+    public Long timestamp;
+    public String baseCurrency;
+    public HashMap<String, Double> rates;
 }

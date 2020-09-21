@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.marybord.App;
 import com.example.marybord.R;
 import com.example.marybord.adapter.CurrencyAdapter;
-import com.example.marybord.data.Currency;
+import com.example.marybord.data.Rate;
 import com.example.marybord.di.component.AppComponent;
 import com.example.marybord.di.component.DaggerActivityComponent;
 import com.example.marybord.di.module.ActivityModule;
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements CurrencyContract.
     }
 
     @Override
-    public void onSuccessful(List<Currency> currencies) {
+    public void onSuccessful(List<Rate> currencies) {
         CurrencyAdapter adapter = new CurrencyAdapter(currencies);
         recyclerView.setAdapter(adapter);
     }
