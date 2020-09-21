@@ -7,10 +7,9 @@ package com.example.marybord;
 
 import android.app.Application;
 
-import com.example.marybord.di.component.DaggerAppComponent;
 import com.example.marybord.di.component.AppComponent;
+import com.example.marybord.di.component.DaggerAppComponent;
 import com.example.marybord.di.module.AppModule;
-import com.example.marybord.di.module.NetModule;
 
 public class App extends Application {
 
@@ -21,9 +20,10 @@ public class App extends Application {
         super.onCreate();
 
         // Dependency Injection
-        appComponent = DaggerAppComponent.builder().
-                appModule(new AppModule(this)).
-                netModule(new NetModule()).build();
+        appComponent = DaggerAppComponent.builder()
+                .appModule(new AppModule(this))
+                .build();
+//                netModule(new NetModule()).build();
     }
 
     public AppComponent getAppComponent() {

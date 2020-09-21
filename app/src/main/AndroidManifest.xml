@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.marybord">
-
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!--Required by Exchange Rates API client -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!--Required by query status of network state before using internet -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"

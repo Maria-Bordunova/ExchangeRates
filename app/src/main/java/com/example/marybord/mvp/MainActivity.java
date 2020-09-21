@@ -16,9 +16,8 @@ import com.example.marybord.App;
 import com.example.marybord.R;
 import com.example.marybord.adapter.CurrencyAdapter;
 import com.example.marybord.data.Currency;
-import com.example.marybord.di.component.ActivityComponent;
-import com.example.marybord.di.component.DaggerActivityComponent;
 import com.example.marybord.di.component.AppComponent;
+import com.example.marybord.di.component.DaggerActivityComponent;
 import com.example.marybord.di.module.ActivityModule;
 
 import java.util.ArrayList;
@@ -50,17 +49,20 @@ public class MainActivity extends AppCompatActivity implements CurrencyContract.
         setContentView(R.layout.activity_main);
 
         // Dependency Injection
-        AppComponent appComponent = ((App) this.getApplicationContext()).getAppComponent();
-
-        ActivityComponent activityComponent = DaggerActivityComponent.builder()
-                .appComponent(appComponent)
-                .activityModule(new ActivityModule(this))
-                .build();
-        activityComponent.inject(this);
+        setupActivityComponent();
 
         initUI();
 
         setListeners();
+    }
+
+    protected void setupActivityComponent() {
+        AppComponent appComponent = ((App) this.getApplicationContext()).getAppComponent();
+
+        DaggerActivityComponent.builder()
+                .appComponent(appComponent)
+                .activityModule(new ActivityModule(this))
+                .build().inject(this);
     }
 
     /**
